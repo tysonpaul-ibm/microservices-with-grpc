@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package base.application;
+
+option go_package = "microservice_with_grpc/protogen/base";
+
+message Application {
+  uint32 application_id = 1 [json_name = "application_id"];
+  string application_full_name = 2 [json_name = "application_full_name"];
+  string phone = 3;
+  string email = 4;
+}
