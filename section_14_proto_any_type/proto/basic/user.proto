@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+import "google/protobuf/any.proto";
+
+// This will tell the protoc to generate the Go code in section_14/protogen/basic path
+option go_package = "section_14/protogen/basic";
+
+enum Gender {
+  GENDER_UNSPECIFIED = 0; // First enum must start with 0. It's a best practice to name as UNSPECIFIED
+  GENDER_MALE = 1; // Prefix every enum value name with the uppercase name of the enum type(GENDER_)
+  GENDER_FEMALE = 2;
+}
+
+message Address {
+  // Field numbers from 1 to 15 takes only 1 bytes to encode,
+  // So put your most commonly used and mandatory fields in the 1 to 15 range.
+  string street = 1;
+  string city = 2;
+  string country = 3;
+
+  // Field numbers from 16+ takes 2 bytes to encode,
+  // So assign numbers 16 and higher for optional or rarely used fields
+  Coordinate coordinate = 16;
+
+  message Coordinate { // Nested message type
+    double latitude = 1;
+    double longitude = 2;
+  }
+}
+
+/* User message type containing
+ * various user user information.
+ */
+message User {
+  uint32 id = 1;
+  string username = 2;
+  bool is_active = 3 [json_name = "is_active"]; // json_name field option is used to specify a custom key name when serializing a message to JSON
+  bytes password = 4;
+  Gender gender = 5; // Enum data type
+  repeated string email = 6; // array data type
+  Address address = 7; // Custom data type
+  google.protobuf.Any communication_type = 8 [json_name = "communication_type"]; // Any data type
+}
+
+message PaperMail {
+  string mail_address = 1 [json_name = "mail_address"];
+}
+
+message SocialMedia {
+  string platform = 1;
+  string username = 2;
+}
+
+message TextMessage {
+  string phone = 1;
+}
