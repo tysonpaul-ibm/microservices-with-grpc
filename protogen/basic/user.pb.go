@@ -155,8 +155,13 @@ type User struct {
 	Email             []string               `protobuf:"bytes,6,rep,name=email,proto3" json:"email,omitempty"`                           // array data type
 	Address           *Address               `protobuf:"bytes,7,opt,name=address,proto3" json:"address,omitempty"`                       // Custom data type
 	CommunicationType *anypb.Any             `protobuf:"bytes,8,opt,name=communication_type,proto3" json:"communication_type,omitempty"` // Any data type
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
+	// Types that are valid to be assigned to ElectronicCommChannel:
+	//
+	//	*User_SocialMedia
+	//	*User_TextMessage
+	ElectronicCommChannel isUser_ElectronicCommChannel `protobuf_oneof:"electronic_comm_channel"`
+	unknownFields         protoimpl.UnknownFields
+	sizeCache             protoimpl.SizeCache
 }
 
 func (x *User) Reset() {
@@ -244,6 +249,47 @@ func (x *User) GetCommunicationType() *anypb.Any {
 	}
 	return nil
 }
+
+func (x *User) GetElectronicCommChannel() isUser_ElectronicCommChannel {
+	if x != nil {
+		return x.ElectronicCommChannel
+	}
+	return nil
+}
+
+func (x *User) GetSocialMedia() *SocialMedia {
+	if x != nil {
+		if x, ok := x.ElectronicCommChannel.(*User_SocialMedia); ok {
+			return x.SocialMedia
+		}
+	}
+	return nil
+}
+
+func (x *User) GetTextMessage() *TextMessage {
+	if x != nil {
+		if x, ok := x.ElectronicCommChannel.(*User_TextMessage); ok {
+			return x.TextMessage
+		}
+	}
+	return nil
+}
+
+type isUser_ElectronicCommChannel interface {
+	isUser_ElectronicCommChannel()
+}
+
+type User_SocialMedia struct {
+	SocialMedia *SocialMedia `protobuf:"bytes,9,opt,name=social_media,proto3,oneof"`
+}
+
+type User_TextMessage struct {
+	TextMessage *TextMessage `protobuf:"bytes,10,opt,name=text_message,proto3,oneof"`
+}
+
+func (*User_SocialMedia) isUser_ElectronicCommChannel() {}
+
+func (*User_TextMessage) isUser_ElectronicCommChannel() {}
 
 type PaperMail struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -452,7 +498,7 @@ const file_proto_basic_user_proto_rawDesc = "" +
 	"\n" +
 	"Coordinate\x12\x1a\n" +
 	"\blatitude\x18\x01 \x01(\x01R\blatitude\x12\x1c\n" +
-	"\tlongitude\x18\x02 \x01(\x01R\tlongitude\"\x8d\x02\n" +
+	"\tlongitude\x18\x02 \x01(\x01R\tlongitude\"\x90\x03\n" +
 	"\x04User\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\rR\x02id\x12\x1a\n" +
 	"\busername\x18\x02 \x01(\tR\busername\x12\x1c\n" +
@@ -461,7 +507,11 @@ const file_proto_basic_user_proto_rawDesc = "" +
 	"\x06gender\x18\x05 \x01(\x0e2\a.GenderR\x06gender\x12\x14\n" +
 	"\x05email\x18\x06 \x03(\tR\x05email\x12\"\n" +
 	"\aaddress\x18\a \x01(\v2\b.AddressR\aaddress\x12D\n" +
-	"\x12communication_type\x18\b \x01(\v2\x14.google.protobuf.AnyR\x12communication_type\"/\n" +
+	"\x12communication_type\x18\b \x01(\v2\x14.google.protobuf.AnyR\x12communication_type\x122\n" +
+	"\fsocial_media\x18\t \x01(\v2\f.SocialMediaH\x00R\fsocial_media\x122\n" +
+	"\ftext_message\x18\n" +
+	" \x01(\v2\f.TextMessageH\x00R\ftext_messageB\x19\n" +
+	"\x17electronic_comm_channel\"/\n" +
 	"\tPaperMail\x12\"\n" +
 	"\fmail_address\x18\x01 \x01(\tR\fmail_address\"E\n" +
 	"\vSocialMedia\x12\x1a\n" +
@@ -503,17 +553,23 @@ var file_proto_basic_user_proto_depIdxs = []int32{
 	0, // 1: User.gender:type_name -> Gender
 	1, // 2: User.address:type_name -> Address
 	7, // 3: User.communication_type:type_name -> google.protobuf.Any
-	4, // [4:4] is the sub-list for method output_type
-	4, // [4:4] is the sub-list for method input_type
-	4, // [4:4] is the sub-list for extension type_name
-	4, // [4:4] is the sub-list for extension extendee
-	0, // [0:4] is the sub-list for field type_name
+	4, // 4: User.social_media:type_name -> SocialMedia
+	5, // 5: User.text_message:type_name -> TextMessage
+	6, // [6:6] is the sub-list for method output_type
+	6, // [6:6] is the sub-list for method input_type
+	6, // [6:6] is the sub-list for extension type_name
+	6, // [6:6] is the sub-list for extension extendee
+	0, // [0:6] is the sub-list for field type_name
 }
 
 func init() { file_proto_basic_user_proto_init() }
 func file_proto_basic_user_proto_init() {
 	if File_proto_basic_user_proto != nil {
 		return
+	}
+	file_proto_basic_user_proto_msgTypes[1].OneofWrappers = []any{
+		(*User_SocialMedia)(nil),
+		(*User_TextMessage)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{

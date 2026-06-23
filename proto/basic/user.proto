@@ -33,13 +33,25 @@ message Address {
  */
 message User {
   uint32 id = 1;
+
   string username = 2;
+
   bool is_active = 3 [json_name = "is_active"]; // json_name field option is used to specify a custom key name when serializing a message to JSON
+
   bytes password = 4;
+
   Gender gender = 5; // Enum data type
+
   repeated string email = 6; // array data type
+
   Address address = 7; // Custom data type
+
   google.protobuf.Any communication_type = 8 [json_name = "communication_type"]; // Any data type
+
+  oneof electronic_comm_channel {
+    SocialMedia social_media = 9 [json_name = "social_media"];
+    TextMessage text_message = 10 [json_name = "text_message"];
+  }
 }
 
 message PaperMail {
