@@ -160,6 +160,7 @@ type User struct {
 	//	*User_SocialMedia
 	//	*User_TextMessage
 	ElectronicCommChannel isUser_ElectronicCommChannel `protobuf_oneof:"electronic_comm_channel"`
+	SkillRating           map[string]uint32            `protobuf:"bytes,11,rep,name=skill_rating,proto3" json:"skill_rating,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"varint,2,opt,name=value"` // map data type. To store data as key-value pair
 	unknownFields         protoimpl.UnknownFields
 	sizeCache             protoimpl.SizeCache
 }
@@ -271,6 +272,13 @@ func (x *User) GetTextMessage() *TextMessage {
 		if x, ok := x.ElectronicCommChannel.(*User_TextMessage); ok {
 			return x.TextMessage
 		}
+	}
+	return nil
+}
+
+func (x *User) GetSkillRating() map[string]uint32 {
+	if x != nil {
+		return x.SkillRating
 	}
 	return nil
 }
@@ -498,7 +506,7 @@ const file_proto_basic_user_proto_rawDesc = "" +
 	"\n" +
 	"Coordinate\x12\x1a\n" +
 	"\blatitude\x18\x01 \x01(\x01R\blatitude\x12\x1c\n" +
-	"\tlongitude\x18\x02 \x01(\x01R\tlongitude\"\x90\x03\n" +
+	"\tlongitude\x18\x02 \x01(\x01R\tlongitude\"\x8c\x04\n" +
 	"\x04User\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\rR\x02id\x12\x1a\n" +
 	"\busername\x18\x02 \x01(\tR\busername\x12\x1c\n" +
@@ -510,7 +518,11 @@ const file_proto_basic_user_proto_rawDesc = "" +
 	"\x12communication_type\x18\b \x01(\v2\x14.google.protobuf.AnyR\x12communication_type\x122\n" +
 	"\fsocial_media\x18\t \x01(\v2\f.SocialMediaH\x00R\fsocial_media\x122\n" +
 	"\ftext_message\x18\n" +
-	" \x01(\v2\f.TextMessageH\x00R\ftext_messageB\x19\n" +
+	" \x01(\v2\f.TextMessageH\x00R\ftext_message\x12:\n" +
+	"\fskill_rating\x18\v \x03(\v2\x16.User.SkillRatingEntryR\fskill_rating\x1a>\n" +
+	"\x10SkillRatingEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\rR\x05value:\x028\x01B\x19\n" +
 	"\x17electronic_comm_channel\"/\n" +
 	"\tPaperMail\x12\"\n" +
 	"\fmail_address\x18\x01 \x01(\tR\fmail_address\"E\n" +
@@ -537,7 +549,7 @@ func file_proto_basic_user_proto_rawDescGZIP() []byte {
 }
 
 var file_proto_basic_user_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_proto_basic_user_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_proto_basic_user_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_proto_basic_user_proto_goTypes = []any{
 	(Gender)(0),                // 0: Gender
 	(*Address)(nil),            // 1: Address
@@ -546,20 +558,22 @@ var file_proto_basic_user_proto_goTypes = []any{
 	(*SocialMedia)(nil),        // 4: SocialMedia
 	(*TextMessage)(nil),        // 5: TextMessage
 	(*Address_Coordinate)(nil), // 6: Address.Coordinate
-	(*anypb.Any)(nil),          // 7: google.protobuf.Any
+	nil,                        // 7: User.SkillRatingEntry
+	(*anypb.Any)(nil),          // 8: google.protobuf.Any
 }
 var file_proto_basic_user_proto_depIdxs = []int32{
 	6, // 0: Address.coordinate:type_name -> Address.Coordinate
 	0, // 1: User.gender:type_name -> Gender
 	1, // 2: User.address:type_name -> Address
-	7, // 3: User.communication_type:type_name -> google.protobuf.Any
+	8, // 3: User.communication_type:type_name -> google.protobuf.Any
 	4, // 4: User.social_media:type_name -> SocialMedia
 	5, // 5: User.text_message:type_name -> TextMessage
-	6, // [6:6] is the sub-list for method output_type
-	6, // [6:6] is the sub-list for method input_type
-	6, // [6:6] is the sub-list for extension type_name
-	6, // [6:6] is the sub-list for extension extendee
-	0, // [0:6] is the sub-list for field type_name
+	7, // 6: User.skill_rating:type_name -> User.SkillRatingEntry
+	7, // [7:7] is the sub-list for method output_type
+	7, // [7:7] is the sub-list for method input_type
+	7, // [7:7] is the sub-list for extension type_name
+	7, // [7:7] is the sub-list for extension extendee
+	0, // [0:7] is the sub-list for field type_name
 }
 
 func init() { file_proto_basic_user_proto_init() }
@@ -577,7 +591,7 @@ func file_proto_basic_user_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_basic_user_proto_rawDesc), len(file_proto_basic_user_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   6,
+			NumMessages:   7,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

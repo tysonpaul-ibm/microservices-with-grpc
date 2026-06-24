@@ -11,32 +11,21 @@ import (
 
 func main() {
 
-	socialMedia := basic.SocialMedia{
-		Platform: "facebook",
-		Username: "tyson.paul",
-	}
-
-	textMsg := basic.TextMessage{
-		Phone: "1234567890",
-	}
-
 	user1 := basic.User{
-		Id:                    1,
-		IsActive:              true,
-		Username:              "Jack",
-		ElectronicCommChannel: &basic.User_SocialMedia{SocialMedia: &socialMedia},
+		Id:       1,
+		IsActive: true,
+		Username: "Jack",
+		SkillRating: map[string]uint32{
+			"music":  6,
+			"arts":   5,
+			"sports": 7,
+		},
 	}
 
-	user2 := basic.User{
-		Id:                    1,
-		IsActive:              true,
-		Username:              "Jill",
-		ElectronicCommChannel: &basic.User_TextMessage{TextMessage: &textMsg},
-	}
-
+	fmt.Println("-------------------")
 	fmt.Println(toJson(&user1))
 	fmt.Println("-------------------")
-	fmt.Println(toJson(&user2))
+
 }
 
 func toJson[T proto.Message](obj T) string {

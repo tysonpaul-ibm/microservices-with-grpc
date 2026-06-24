@@ -48,10 +48,12 @@ message User {
 
   google.protobuf.Any communication_type = 8 [json_name = "communication_type"]; // Any data type
 
-  oneof electronic_comm_channel {
+  oneof electronic_comm_channel { // oneof data type. It allows only the message type of SocialMedia or TextMessage
     SocialMedia social_media = 9 [json_name = "social_media"];
     TextMessage text_message = 10 [json_name = "text_message"];
   }
+
+  map<string, uint32> skill_rating = 11 [json_name = "skill_rating"]; // map data type. To store data as key-value pair
 }
 
 message PaperMail {
