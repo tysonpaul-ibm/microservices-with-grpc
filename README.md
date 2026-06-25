@@ -34,3 +34,6 @@ Use the below index to find the navigate to the desired section.
 
 - [Section 16 - map](https://github.com/tysonpaul-ibm/microservices-with-grpc/tree/section_16_map)
   - This section is about `map` type in protocol buffers to store data as a key-value pair.
+
+- [Section 17 - Read & Write protobuf to disk](https://github.com/tysonpaul-ibm/microservices-with-grpc/tree/section_17_rw_proto_to_disk)
+  - This section teaches about read and write protocol buffers to disk as binary file using `google.golang.org/protobuf/proto` package.
